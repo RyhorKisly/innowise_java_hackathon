@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  innowise:
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: innowise
+      POSTGRES_USER: innowise
+      POSTGRES_PASSWORD: innowise
+    ports:
+      - '5432:5432'

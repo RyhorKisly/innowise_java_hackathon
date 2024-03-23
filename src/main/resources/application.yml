@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: innowise_java_hackathon
+
+# Datasource
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/innowise
+    username: innowise
+    password: innowise
+
+# Liquibase
+  liquibase:
+    default-schema: app
+    liquibase-schema: liquibase
+    change-log: db/changelog/changelog.xml
+
+## Logging
+#logging:
+#  pattern:
+#    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+#  file:
+#    name: logs/${spring.application.name}.log
+#  level:
+#    web: DEBUG
+#  logback:
+#    rolling-policy:
+#      max-file-size: 1MB
+#      file-name-pattern: logs/${spring.application.name}.%d{yyyy.MM.dd}.%i.log
+#      max-history: 7
+
+# Server
+server:
+  port: 8080
+
+mexc:
+  api: https://api.mexc.com/api/v3/ticker/price
+
+bot:
+  name: InnowiseCryptocurrencyBot
+  token: 7057867803:AAFVVvObGzjwiXTXcq7AY8EzkbCMAhrqSAQ

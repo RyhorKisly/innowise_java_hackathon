@@ -1,4 +1,4 @@
-package innowise.com.innowise_java_hackathon.web.listener;
+package innowise.com.innowise_java_hackathon.listener;
 
 import innowise.com.innowise_java_hackathon.service.CryptocurrencyService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ public class CryptocurrencyListener {
 
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
-        cryptocurrencyService.deleteAll();
         cryptocurrencyService.migrateCryptocurrencies();
+        System.out.println("migrated");
     }
 
 }

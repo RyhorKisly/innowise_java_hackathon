@@ -4,27 +4,23 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="001" author="GrigoriyKislyi">
+    <changeSet id="002" author="GrigoriyKislyi">
 
-        <createTable tableName="cryptocurrency"
+        <createTable tableName="chat"
                      schemaName="app">
             <column name="uuid" type="uuid">
                 <constraints primaryKey="true"
-                             primaryKeyName="cryptocurrency_pkey"
+                             primaryKeyName="chat_pkey"
                              nullable="false"/>
             </column>
-            <column name="symbol" type="text">
+            <column name="chat_id" type="bigint">
                 <constraints unique="true"
-                             uniqueConstraintName="symbol_unique"
+                             uniqueConstraintName="chat_unique"
                              nullable="false"/>
             </column>
-            <column name="price" type="numeric">
-                <constraints nullable="false"/>
+            <column name="threshold_percentage" type="bigint">
             </column>
-            <column name="dt_create" type="timestamp without time zone">
-                <constraints nullable="false"/>
-            </column>
-            <column name="dt_update" type="timestamp without time zone">
+            <column name="status" type="text">
                 <constraints nullable="false"/>
             </column>
         </createTable>

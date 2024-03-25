@@ -6,20 +6,30 @@ import innowise.com.innowise_java_hackathon.core.exceptions.FindEntityException;
 import innowise.com.innowise_java_hackathon.core.mapper.CryptocurrencyMapper;
 import innowise.com.innowise_java_hackathon.dao.CryptocurrencyRepository;
 import innowise.com.innowise_java_hackathon.service.CryptocurrencyService;
-import innowise.com.innowise_java_hackathon.service.feign.CryptocurrencyServiceClient;
+import innowise.com.innowise_java_hackathon.service.MexcService;
+import innowise.com.innowise_java_hackathon.service.feign.MexcServiceClient;
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CryptocurrencyServiceImpl implements CryptocurrencyService {
-    private final CryptocurrencyServiceClient cryptocurrencyServiceClient;
+    private final MexcService mexcService;
     private final CryptocurrencyRepository cryptocurrencyRepository;
     private final CryptocurrencyMapper cryptocurrencyMapper;
+
+    @Override
+    public CryptocurrencyDto getBySymbol(CryptocurrencyDto cryptocurrencyDto) {
+        Cryptocurrency cryptocurrency = cryptocurrencyRepository.findBySymbol(cryptocurrencyDto.symbol()).orElseThrow(
+                () -> new FindEntityException("Cryptocurrency not found!")
+        );
+        return cryptocurrencyMapper.toDto(cryptocurrency);
+    }
+
     @Override
     @Transactional
     public List<CryptocurrencyDto> getAll() {
@@ -28,16 +38,11 @@ public class CryptocurrencyServiceImpl implements CryptocurrencyService {
     }
 
     @Override
-    public CryptocurrencyDto saveAll() {
-        return null;
-    }
-
-    @Override
     @Transactional
     public void migrateCryptocurrencies() {
-        List<CryptocurrencyDto> cryptocurrencyDtos = cryptocurrencyServiceClient.getAll().getBody();
+        List<CryptocurrencyDto> cryptocurrencyDtos = mexcService.getAll();
         List<Cryptocurrency> cryptocurrencies = cryptocurrencyMapper.toEntities(cryptocurrencyDtos);
-        List<Cryptocurrency> saved = cryptocurrencyRepository.saveAll(cryptocurrencies);
+        cryptocurrencyRepository.saveAll(cryptocurrencies);
     }
 
     @Override
@@ -48,17 +53,17 @@ public class CryptocurrencyServiceImpl implements CryptocurrencyService {
 
     @Override
     @Transactional
-    public CryptocurrencyDto update(CryptocurrencyDto cryptocurrencyDto) {
+    public CryptocurrencyDto updatePrice(CryptocurrencyDto cryptocurrencyDto) {
         Cryptocurrency cryptocurrency = cryptocurrencyRepository.findBySymbol(cryptocurrencyDto.symbol()).orElseThrow(
                 () -> new FindEntityException("cryptocurrency not found")
         );
-        LocalDateTime version = cryptocurrency.getDtUpdate();
         cryptocurrency.setPrice(cryptocurrencyDto.price());
         cryptocurrency = cryptocurrencyRepository.save(cryptocurrency);
-        LocalDateTime updatedVersion = cryptocurrency.getDtUpdate();
-
-        cryptocurrency.setUpdated(version.isEqual(updatedVersion));
-
         return cryptocurrencyMapper.toDto(cryptocurrency);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        cryptocurrencyRepository.deleteAll();
     }
 }

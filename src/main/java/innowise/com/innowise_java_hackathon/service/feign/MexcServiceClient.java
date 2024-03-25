@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @FeignClient(name = "tokenClient", url = "${mexc.api}")
-public interface CryptocurrencyServiceClient {
+public interface MexcServiceClient {
 
     @GetMapping
     ResponseEntity<List<CryptocurrencyDto>> getAll();

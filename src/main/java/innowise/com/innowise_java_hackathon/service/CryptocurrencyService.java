@@ -5,9 +5,9 @@ import innowise.com.innowise_java_hackathon.core.dto.CryptocurrencyDto;
 import java.util.List;
 
 public interface CryptocurrencyService {
+    CryptocurrencyDto getBySymbol(CryptocurrencyDto cryptocurrencyDto);
     List<CryptocurrencyDto> getAll();
-    CryptocurrencyDto saveAll();
     void migrateCryptocurrencies();
     void deleteAll();
-    CryptocurrencyDto update(CryptocurrencyDto cryptocurrencyDto);
+    CryptocurrencyDto updatePrice(CryptocurrencyDto cryptocurrencyDto);
 }

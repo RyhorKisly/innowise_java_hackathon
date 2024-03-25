@@ -15,19 +15,19 @@ spring:
     liquibase-schema: liquibase
     change-log: db/changelog/changelog.xml
 
-## Logging
-#logging:
-#  pattern:
-#    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
-#  file:
-#    name: logs/${spring.application.name}.log
-#  level:
-#    web: DEBUG
-#  logback:
-#    rolling-policy:
-#      max-file-size: 1MB
-#      file-name-pattern: logs/${spring.application.name}.%d{yyyy.MM.dd}.%i.log
-#      max-history: 7
+# Logging
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+  file:
+    name: logs/${spring.application.name}.log
+  level:
+    web: DEBUG
+  logback:
+    rolling-policy:
+      max-file-size: 1MB
+      file-name-pattern: logs/${spring.application.name}.%d{yyyy.MM.dd}.%i.log
+      max-history: 7
 
 # Server
 server:

@@ -23,7 +23,7 @@
 		<openfeign.version>4.1.0</openfeign.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<preliquibase.version>1.5.0</preliquibase.version>
-		<telegrambots.version>6.0.1</telegrambots.version>
+		<telegrambots.version>6.7.0</telegrambots.version>
 	</properties>
 
 	<dependencies>
@@ -69,11 +69,16 @@
 			<version>${mapstruct.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.telegram</groupId>
-			<artifactId>telegrambots</artifactId>
-			<version>${telegrambots.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>org.telegram</groupId>
+				<artifactId>telegrambots-spring-boot-starter</artifactId>
+				<version>${telegrambots.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.telegram</groupId>
+				<artifactId>telegrambots-abilities</artifactId>
+				<version>${telegrambots.version}</version>
+			</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>

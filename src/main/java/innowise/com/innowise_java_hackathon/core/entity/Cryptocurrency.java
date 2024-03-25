@@ -12,6 +12,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Transient;
 import jakarta.persistence.Version;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(schema = "app", name = "crypto")
+@Table(schema = "app", name = "cryptocurrency")
 public class Cryptocurrency {
 
     @Id
@@ -38,8 +39,12 @@ public class Cryptocurrency {
     @UuidGenerator
     private UUID uuid;
 
+    @NotNull
+    @Column(name = "symbol")
     private String symbol;
 
+    @NotNull
+    @Column(name = "price")
     private BigDecimal price;
 
     @CreationTimestamp(source = SourceType.DB)
@@ -52,7 +57,4 @@ public class Cryptocurrency {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dt_update")
     private LocalDateTime dtUpdate;
-
-    @Transient
-    private boolean isUpdated;
 }
